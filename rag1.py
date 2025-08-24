@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_google_genai import ChatGoogleGenerativeAI,GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import ChatPromptTemplate
@@ -10,7 +11,7 @@ from langchain_core.output_parsers import StrOutputParser
 
 load_dotenv()  
 
-os.environ['LANGSMITH_PROJECT']='RAG chatbot'
+# os.environ['LANGSMITH_PROJECT']='RAG chatbot'
 PDF_PATH = "islr.pdf"
 
 # 1) Load PDF
@@ -18,11 +19,11 @@ loader = PyPDFLoader(PDF_PATH)
 docs = loader.load()  # one Document per page
 
 # 2) Chunk
-splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
+splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=50)
 splits = splitter.split_documents(docs)
 
 # 3) Embed + index
-emb = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+emb = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 vs = FAISS.from_documents(splits, emb)
 retriever = vs.as_retriever(search_type="similarity", search_kwargs={"k": 4})
 

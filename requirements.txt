@@ -19,9 +19,10 @@ langchain-google-genai
 google-generativeai
 
 # Hugging Face Integration
-# langchain-huggingface
-# transformers
-# huggingface-hub
+langchain-huggingface
+transformers
+huggingface-hub
+sentence-transformers
 
 # Environment Variable Management
 python-dotenv
