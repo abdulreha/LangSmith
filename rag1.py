@@ -11,7 +11,7 @@ from langchain_core.output_parsers import StrOutputParser
 load_dotenv()  
 
 os.environ['LANGSMITH_PROJECT']='RAG chatbot'
-PDF_PATH = "rag.pdf"
+PDF_PATH = "islr.pdf"
 
 # 1) Load PDF
 loader = PyPDFLoader(PDF_PATH)
